@@ -1,6 +1,0 @@
-{
-  "sysroot": "/home/aj/.rustup/toolchains/1.91.1-x86_64-unknown-linux-gnu",
-  "crates": [
-    { "root_module": "std", "edition": "2024", "deps": [] }
-  ]
-}

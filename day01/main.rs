@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::Read;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut input_file = File::open("input")?;
+    let mut input_file = File::open("day01/input")?;
 
     let mut lines = String::new();
     input_file.read_to_string(&mut lines)?;
@@ -16,26 +16,23 @@ fn main() -> Result<(), Box<dyn Error>> {
             num *= -1
         }
 
-        let mut next = arrow + num;
-        if next <= 0 {
-            next *= -1;
-            next += 100
+        // 50 -150 = -100 -> 2
+        // 50 - 149 = -99 -> 1
+        // 50 - 50 = 0 -> 1
+        // 50 - 49 = 1 -> 0
+        // 50 + 49 = 99 -> 0
+        // 50 + 50 = 100 -> 1
+        let mut d = arrow + num;
+        if d <= 0 && arrow > 0 {
+            d -= 100;
         }
-        if (next / 100) > 0 {
-            count += next / 100;
-            if arrow == 0 {
-                count -= 1;
-            }
-        }
-        // println!("{} + {}: {}, {}", arrow, line, next, count);
+        let e = (d / 100).abs();
+        count += e;
 
         arrow = (arrow + num) % 100;
         if arrow < 0 {
             arrow += 100
         }
-        // if arrow == 0 {
-        //     count += 1;
-        // }
     }
     println!("{}", count);
 
