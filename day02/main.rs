@@ -2,34 +2,31 @@ use std::error::Error;
 use std::fs;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let input = fs::read_to_string("input")?;
+    let input = fs::read_to_string("day02/test")?;
 
     let mut count: i64 = 0;
     for line in input.trim_end().split(',') {
         let parts: Vec<&str> = line.split('-').collect();
-        let mut first = parts[0].to_string();
-        if first.len() %2 != 0 {
-            first = format!("0{}", first);
-        }
-        let min:i64 = first.parse()?;
-        let max: i64 = parts[1].parse()?;
-        let part = &first[0..first.len()/2];
-        
-        let mut num: i64 = part.parse()?;
-        loop {
-            let mut res = num.to_string();
-            res = format!("{}{}", res, res);
-            let res_num: i64 = res.parse()?;
-            if res_num > max {
-                break;
+        let first = parts[0].to_string();
+        let min: u64 = first.parse()?;
+        let last = parts[1].to_string();
+        let max: u64 = last.parse()?;
+
+        for l in 1..last.len() + 1 {
+            if (l > first.len()) {}
+
+            let seq = &first[0..l];
+            let mut res = String::from(seq);
+
+            for mul in l..last.len() + 1 {
+                res.push_str(seq);
             }
-            if res_num >= min {
-                count += res_num;
-                println!("{}", res_num)
+
+            let num: u64 = res.parse()?;
+            if num >= min && num <= max {
+                count += 1;
             }
-            num += 1
         }
-        
     }
 
     println!("{}", count);
